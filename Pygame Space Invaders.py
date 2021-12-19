@@ -1,6 +1,5 @@
 import pygame
 
-pygame.display.set_caption("Space Invaders")
 
 class Game:
     screen = None
@@ -16,19 +15,19 @@ class Game:
         self.clock = pygame.time.Clock()
         done = False
 
-        hero = Hero(self, width / 2, height - 20)
+        hero = Hero(self, width / 2, height - 15)
         generator = Generator(self)
         rocket = None
 
         while not done:
             if len(self.aliens) == 0:
-                self.displayText("  YOU HAVE WON!")
+                self.displayText("YOU HAVE DEFEATED THE ALIENS!")
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:  
-                hero.x -= 2 if hero.x > 20 else 0  
+                hero.x -= 2 if hero.x > 15 else 0  
             elif pressed[pygame.K_RIGHT]:  
-                hero.x += 2 if hero.x < width - 20 else 0  
+                hero.x += 2 if hero.x < width - 15 else 0  
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -45,7 +44,7 @@ class Game:
                 alien.checkCollision(self)
                 if (alien.y > height):
                     self.lost = True
-                    self.displayText("  YOU HAVE LOST")
+                    self.displayText("THE ALIENS HAVE DEFEATED YOU")
 
             for rocket in self.rockets:
                 rocket.draw()
@@ -54,8 +53,8 @@ class Game:
 
     def displayText(self, text):
         pygame.font.init()
-        font = pygame.font.SysFont('Arial', 50)
-        textsurface = font.render(text, False, (44, 0, 62))
+        font = pygame.font.SysFont('Arial', 30)
+        textsurface = font.render(text, False, (100, 40, 40))
         self.screen.blit(textsurface, (110, 160))
 
 
@@ -103,7 +102,6 @@ class Generator:
                 game.aliens.append(Alien(game, x, y))
 
 
-
 class Rocket:
     def __init__(self, game, x, y):
         self.x = x
@@ -114,7 +112,7 @@ class Rocket:
         pygame.draw.rect(self.game.screen,  
                          (254, 52, 110),  
                          pygame.Rect(self.x, self.y, 2, 4))
-        self.y -= 2  
+        self.y -= 2
 
 
 if __name__ == '__main__':
